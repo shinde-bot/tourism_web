@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-bg" src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Hero">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-inner container">
+    <h1 class="hero-title">INDIA</h1>
+
+    <!-- thumbnail strip -->
+    <div class="thumb-strip" role="region" aria-label="Highlights">
+      <button class="thumb-btn prev" onclick="scrollThumbs(-260)">‹</button>
+      <div class="thumb-track">
+        {% for place in places %}
+        <div class="thumb">
+          <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.name }}">
+          <div class="thumb-caption">{{ place.name }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="thumb-btn next" onclick="scrollThumbs(260)">›</button>
+    </div>
+
+    <div class="hero-cta">
+      <a href="{{ url_for('itinerary') }}" class="btn btn-cta hero-book">Book</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / TIMELINE -->
+<section class="about container">
+  <h2 class="section-title">About the Tour</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>We planned a simple and convenient itinerary to show you the highlights of India — culture, food, and scenic wonders.</p>
+      <p class="muted">Visit iconic spots, take cultural walks, and enjoy local cuisine.</p>
+    </div>
+    <div class="timeline">
+      {% for key, it in itineraries.items() %}
+      <div class="timeline-item">
+        <div class="tl-day">{{ it.title }}</div>
+        <ol>
+          {% for day in it.days %}
+            <li>{{ day }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included container">
+  <h2 class="section-title">What's Included</h2>
+  <div class="included-grid">
+    <div class="inc-card"><h3>Guides</h3><p>Experienced local guides.</p></div>
+    <div class="inc-card"><h3>Flights</h3><p>Domestic transfers where needed.</p></div>
+    <div class="inc-card"><h3>Transfers</h3><p>Airport & hotel transfers.</p></div>
+    <div class="inc-card"><h3>Hotels</h3><p>Comfortable stays with breakfast.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT & FOOTER -->
+<section class="contact-cta">
+  <div class="contact-panel container">
+    <div>
+      <h3>Want to join us, but have questions?</h3>
+      <p>Leave a request and we'll get back to you.</p>
+    </div>
+    <form method="post" class="contact-form" action="{{ url_for('create_user') }}">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="text" name="phone" placeholder="Phone number">
+      <textarea name="comment" placeholder="Comment"></textarea>
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+  </div>
+
+  <footer class="site-footer container">
+    <div>© Discover India</div>
+    <div>About • Included • Contacts</div>
+  </footer>
+</section>
+
+<script>
+function scrollThumbs(px){
+  const track = document.querySelector('.thumb-track');
+  if (!track) return;
+  track.scrollBy({ left: px, behavior: 'smooth' });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Suggested Itineraries</h2>
+{% for key, it in itineraries.items() %}
+  <div class="itinerary-card container">
+    <h3>{{ it.title }}</h3>
+    <ol>
+      {% for d in it.days %}
+        <li>{{ d }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+{% endfor %}
+{% endblock %}

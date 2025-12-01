@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ title|default("Discover India") }}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="wrap">
+      <a class="brand" href="{{ url_for('home') }}">Discover India</a>
+      <ul>
+        <li><a class="navlink" href="{{ url_for('home') }}">Welcome</a></li>
+        <li><a class="navlink" href="{{ url_for('itinerary') }}">Itinerary</a></li>
+        <li><a class="navlink" href="{{ url_for('login') }}">Access</a></li>
+        <li><a class="navlink" href="{{ url_for('register') }}">Join Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>

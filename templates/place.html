@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="place-detail container">
+  <h2>{{ place.name }}</h2>
+  <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.name }}">
+  <p class="meta">{{ place.region }}</p>
+  <p>{{ place.description }}</p>
+  <a class="btn btn-cta" href="{{ url_for('itinerary') }}">See Itineraries</a>
+</div>
+{% endblock %}
