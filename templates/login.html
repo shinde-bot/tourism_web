@@ -1,48 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="auth-box container">
-    <!-- Heading -->
-    <h2>Welcome to Tourism India</h2>
-    <p class="subtitle">Sign in to explore amazing destinations!</p>
-
-    <form method="POST" novalidate>
-        {{ form.hidden_tag() }}
-
-        <!-- Username Field -->
-        <div class="form-group field">
-            {{ form.username.label }}<br>
-            {{ form.username(class_="input-field", size=32, placeholder="Enter your username") }}
-        </div>
-
-        <!-- Password Field -->
-        <div class="form-group field">
-            {{ form.password.label }}<br>
-            {{ form.password(class_="input-field", size=32, placeholder="Enter your password") }}
-        </div>
-
-        <!-- Submit Button -->
-        <div class="actions">
-            {{ form.submit(class_="btn btn-primary", type="submit") }}
-        </div>
-
-        <!-- Links -->
-        <div class="links">
-            <p>
-                <a href="{{ url_for('register') }}">Sign Up</a> |
-                <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
-            </p>
-        </div>
-
-        <!-- Flash Messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul class="flashes">
-            {% for cat, msg in messages %}
-                <li class="{{ cat }}">{{ msg }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        {% endwith %}
-    </form>
+<div class="container auth">
+  <h2>Login</h2>
+  <form>
+    <input placeholder="Email" />
+    <input placeholder="Password" type="password" />
+    <button>Login</button>
+  </form>
 </div>
 {% endblock %}

@@ -1,94 +1,61 @@
 {% extends "base.html" %}
+{% block title %}Home — India Tours{% endblock %}
 
 {% block content %}
-<!-- HERO -->
-<section class="hero">
-  <img class="hero-bg" src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Hero">
-  <div class="hero-overlay"></div>
+<section class="hero" style="background-image:url('{{ url_for('static', filename='images/hero.jpg') }}')">
+  <div class="hero-inner">
+    <h1>INDIA</h1>
+    <p class="hero-sub">Explore the beauty of India — Uttarakhand, Jaipur, Kerala, Maharashtra, and Kashmir</p>
 
-  <div class="hero-inner container">
-    <h1 class="hero-title">INDIA</h1>
-
-    <!-- thumbnail strip -->
-    <div class="thumb-strip" role="region" aria-label="Highlights">
-      <button class="thumb-btn prev" onclick="scrollThumbs(-260)">‹</button>
-      <div class="thumb-track">
-        {% for place in places %}
-        <div class="thumb">
-          <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.name }}">
-          <div class="thumb-caption">{{ place.name }}</div>
-        </div>
-        {% endfor %}
+    <div class="thumb-row">
+      {% for t in tours %}
+      <div class="thumb-card">
+        <img src="{{ url_for('static', filename='images/' + (t.img or 'default.jpg')) }}" alt="{{ t.title }}">
+        <div class="thumb-caption">{{ t.title }}</div>
       </div>
-      <button class="thumb-btn next" onclick="scrollThumbs(260)">›</button>
-    </div>
-
-    <div class="hero-cta">
-      <a href="{{ url_for('itinerary') }}" class="btn btn-cta hero-book">Book</a>
+      {% endfor %}
+      <div class="thumb-book">
+        <button onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})">Book</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT / TIMELINE -->
-<section class="about container">
-  <h2 class="section-title">About the Tour</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>We planned a simple and convenient itinerary to show you the highlights of India — culture, food, and scenic wonders.</p>
-      <p class="muted">Visit iconic spots, take cultural walks, and enjoy local cuisine.</p>
-    </div>
-    <div class="timeline">
-      {% for key, it in itineraries.items() %}
-      <div class="timeline-item">
-        <div class="tl-day">{{ it.title }}</div>
-        <ol>
-          {% for day in it.days %}
-            <li>{{ day }}</li>
-          {% endfor %}
-        </ol>
+<section class="included">
+  <div class="container">
+    <h2>Top Destinations</h2>
+    <div class="included-grid">
+      {% for t in tours %}
+      <div class="inc-card">
+        <img src="{{ url_for('static', filename='images/' + t.img) }}" style="width:100%; border-radius:12px;"/>
+        <h3>{{ t.title }}</h3>
+        <p>{{ t.description[:120] }}...</p>
+        <a href="/place/{{ t.id }}" class="btn-book">View Details</a>
       </div>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- INCLUDED -->
-<section class="included container">
-  <h2 class="section-title">What's Included</h2>
-  <div class="included-grid">
-    <div class="inc-card"><h3>Guides</h3><p>Experienced local guides.</p></div>
-    <div class="inc-card"><h3>Flights</h3><p>Domestic transfers where needed.</p></div>
-    <div class="inc-card"><h3>Transfers</h3><p>Airport & hotel transfers.</p></div>
-    <div class="inc-card"><h3>Hotels</h3><p>Comfortable stays with breakfast.</p></div>
-  </div>
-</section>
-
-<!-- CONTACT & FOOTER -->
-<section class="contact-cta">
-  <div class="contact-panel container">
-    <div>
-      <h3>Want to join us, but have questions?</h3>
-      <p>Leave a request and we'll get back to you.</p>
+<section class="contact" id="book">
+  <div class="container">
+    <h2>Get Your Itinerary</h2>
+    <div class="contact-inner">
+      <form id="contact-form" onsubmit="return submitContact(event)">
+        <input type="hidden" id="tour_id" name="tour_id" value="{{ tours[0].id if tours else '' }}">
+        <label>Your Name</label>
+        <input id="name" name="name" required/>
+        <label>Email</label>
+        <input id="email" name="email" required/>
+        <label>Phone</label>
+        <input id="phone" name="phone"/>
+        <label>Comment</label>
+        <textarea id="comment" name="comment"></textarea>
+        <button type="submit">Send Itinerary</button>
+        <div id="contact-status"></div>
+      </form>
+      <div class="contact-image" style="background-image:url('{{ url_for('static', filename='images/footer-bg.jpg') }}')"></div>
     </div>
-    <form method="post" class="contact-form" action="{{ url_for('create_user') }}">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="text" name="phone" placeholder="Phone number">
-      <textarea name="comment" placeholder="Comment"></textarea>
-      <button type="submit" class="btn btn-primary">Send</button>
-    </form>
   </div>
-
-  <footer class="site-footer container">
-    <div>© Discover India</div>
-    <div>About • Included • Contacts</div>
-  </footer>
 </section>
-
-<script>
-function scrollThumbs(px){
-  const track = document.querySelector('.thumb-track');
-  if (!track) return;
-  track.scrollBy({ left: px, behavior: 'smooth' });
-}
-</script>
 {% endblock %}

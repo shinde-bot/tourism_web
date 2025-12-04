@@ -1,40 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ title|default("Discover India") }}</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}India Tours{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 </head>
 <body>
-
-  <nav class="navbar">
-    <div class="wrap">
-      <a class="brand" href="{{ url_for('home') }}">Discover India</a>
-      <ul>
-        <li><a class="navlink" href="{{ url_for('home') }}">Welcome</a></li>
-        <li><a class="navlink" href="{{ url_for('itinerary') }}">Itinerary</a></li>
-        <li><a class="navlink" href="{{ url_for('login') }}">Access</a></li>
-        <li><a class="navlink" href="{{ url_for('register') }}">Join Us</a></li>
-      </ul>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">INDIA TOURS</div>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/itinerary">Itinerary</a>
+        <a href="#contacts">Contact</a>
+        <a class="btn-book" href="#book">Book</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <div class="container">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+  <!-- Main content -->
+  {% block content %}{% endblock %}
 
-    {% block content %}{% endblock %}
-  </div>
+  <!-- Footer -->
+  <footer class="site-footer" id="contacts">
+    <div class="container">
+      <p>© India Tours</p>
+    </div>
+  </footer>
 
+  <!-- Scripts -->
+  <script>
+    async function postBooking(payload, endpoint='/api/book'){
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const body = await res.json();
+        return {status: res.status, body};
+      } catch(e){
+        return {status:500, body:{error:e.message}};
+      }
+    }
+
+    async function submitContact(e){
+      e.preventDefault();
+      const payload = {
+        tour_id: parseInt(document.getElementById('tour_id').value),
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        comment: document.getElementById('comment').value
+      };
+      const res = await postBooking(payload, '/api/send-itinerary');
+      const status = document.getElementById('contact-status');
+      if(res.status === 200){
+        status.textContent = "Itinerary sent! Check your email.";
+        status.style.color = "lightgreen";
+        document.getElementById('contact-form').reset();
+      } else {
+        status.textContent = res.body.error || "Failed to send itinerary.";
+        status.style.color = "salmon";
+      }
+      return false;
+    }
+  </script>
 </body>
 </html>

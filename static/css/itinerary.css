@@ -1,9 +1,0 @@
-.itinerary-card{
-  background:#fff;
-  margin: 18px auto;
-  padding: 16px;
-  border-radius:10px;
-  max-width:900px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-}
-.itinerary-card ol{ padding-left: 18px; color:#334155; }

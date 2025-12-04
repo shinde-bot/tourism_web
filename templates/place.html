@@ -1,10 +1,50 @@
 {% extends "base.html" %}
+{% block title %}{{ tour.title }} — Japan Tours{% endblock %}
 {% block content %}
-<div class="place-detail container">
-  <h2>{{ place.name }}</h2>
-  <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.name }}">
-  <p class="meta">{{ place.region }}</p>
-  <p>{{ place.description }}</p>
-  <a class="btn btn-cta" href="{{ url_for('itinerary') }}">See Itineraries</a>
-</div>
+<section class="place-hero" style="background-image:url('{{ url_for('static', filename='images/' + tour.img) }}')">
+  <div class="container">
+    <h1>{{ tour.title }}</h1>
+    <p class="muted">{{ tour.subtitle }}</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="place-details">
+    <p>{{ tour.description }}</p>
+    <p><strong>Days:</strong> {{ tour.days }} — <strong>Price:</strong> €{{ "%.2f"|format(tour.price) }}</p>
+
+    <h3>Book this tour</h3>
+    <form onsubmit="return submitPlaceBooking(event)">
+      <input type="hidden" id="place_tour_id" value="{{ tour.id }}">
+      <input id="place_name" placeholder="Your name" required />
+      <input id="place_email" placeholder="Email" />
+      <input id="place_phone" placeholder="Phone" />
+      <button type="submit">Book</button>
+      <div id="place-status"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+async function submitPlaceBooking(e){
+  e.preventDefault();
+  const payload = {
+    tour_id: parseInt(document.getElementById('place_tour_id').value),
+    name: document.getElementById('place_name').value,
+    email: document.getElementById('place_email').value,
+    phone: document.getElementById('place_phone').value
+  };
+  const res = await postBooking(payload);
+  const s = document.getElementById('place-status');
+  if(res.status===201){
+    s.textContent = "Booking confirmed — thank you!";
+    s.style.color = "lightgreen";
+    e.target.reset();
+  } else {
+    s.textContent = res.body && res.body.error ? res.body.error : "Booking failed";
+    s.style.color = "salmon";
+  }
+  return false;
+}
+</script>
 {% endblock %}

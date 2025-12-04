@@ -1,22 +1,31 @@
-from datetime import datetime, timedelta
-from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+from extensions import db
 
-db = SQLAlchemy()
-
-class User(db.Model):
+class Tour(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    failed_attempts = db.Column(db.Integer, default=0)
-    locked_until = db.Column(db.DateTime, nullable=True)
+    title = db.Column(db.String(180), nullable=False)
+    subtitle = db.Column(db.String(200))
+    description = db.Column(db.Text, nullable=False)
+    days = db.Column(db.Integer, default=3)
+    img = db.Column(db.String(200), default="thumb-osaka.jpg")
+    price = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def is_locked(self):
-        if self.locked_until and datetime.utcnow() < self.locked_until:
-            return True
-        return False
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tour_id = db.Column(db.Integer, db.ForeignKey("tour.id"), nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    phone = db.Column(db.String(60))
+    email = db.Column(db.String(120))
+    comment = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def lock(self, minutes=5):
-        self.locked_until = datetime.utcnow() + timedelta(minutes=minutes)
-        self.failed_attempts = 0
+
+class Hotel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tour_id = db.Column(db.Integer, db.ForeignKey("tour.id"), nullable=False)
+    name = db.Column(db.String(200), nullable=False)
+    price_per_night = db.Column(db.Float, default=0.0)
+    location = db.Column(db.String(200))
+
+    tour = db.relationship("Tour", backref=db.backref("hotels", lazy=True))

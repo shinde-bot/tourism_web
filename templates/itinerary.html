@@ -1,14 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Suggested Itineraries</h2>
-{% for key, it in itineraries.items() %}
-  <div class="itinerary-card container">
-    <h3>{{ it.title }}</h3>
-    <ol>
-      {% for d in it.days %}
-        <li>{{ d }}</li>
-      {% endfor %}
-    </ol>
+<div class="container">
+  <h2>India Itinerary</h2>
+  <div class="it-grid">
+    {% for t in tours %}
+      <div class="it-card">
+        <img src="{{ url_for('static', filename='images/' + t.img) }}">
+        <h3>{{ t.title }}</h3>
+        <p>Days: {{ t.days }}</p>
+        <p>{{ t.description[:140] }}...</p>
+        {% if t.hotels %}
+          <p><strong>Hotels:</strong> 
+            {% for h in t.hotels %}
+              {{ h.name }} (€{{ "%.2f"|format(h.price_per_night) }}){% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+        {% endif %}
+        <p><strong>Price:</strong> €{{ "%.2f"|format(t.price) }}</p>
+        <a href="/place/{{ t.id }}">Details</a>
+      </div>
+    {% endfor %}
   </div>
-{% endfor %}
+</div>
 {% endblock %}
