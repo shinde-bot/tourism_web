@@ -5,7 +5,7 @@
 
   --dark: #000000; /* white color */
   --light: #ffffff;
-  --gold: #ffdd00;
+  --gold: #11110d;
   /* other variables */
 
 
@@ -576,3 +576,5 @@ body {
   opacity: 0;  /* Start hidden */
   animation-fill-mode: forwards;
 }
+
+

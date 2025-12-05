@@ -1,50 +1,383 @@
 {% extends "base.html" %}
-{% block title %}{{ tour.title }} — Japan Tours{% endblock %}
+{% block title %}{{ tour.title }} — India Tours{% endblock %}
+
 {% block content %}
-<section class="place-hero" style="background-image:url('{{ url_for('static', filename='images/' + tour.img) }}')">
-  <div class="container">
-    <h1>{{ tour.title }}</h1>
-    <p class="muted">{{ tour.subtitle }}</p>
-  </div>
+
+<style>
+body {
+    font-family: 'Verdana', sans-serif;
+    background: #fff8f0;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+nav {
+    background: #5a3725;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ffcc33;
+}
+
+.hero-section {
+    background-image: url('{{ url_for('static', filename='images/' + tour.img) }}');
+    background-size: cover;
+    background-position: center;
+    padding: 150px 20px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero-section::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    border-radius: 0 0 20px 20px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+}
+
+#welcome-msg {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px 0;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    color: #ff6600;
+}
+
+.tour-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.tour-info-left,
+.tour-info-right {
+    flex: 1 1 400px;
+    background: #fff4e6;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tour-info-left:hover,
+.tour-info-right:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.tour-info h2,
+.tour-info h3 {
+    color: #ff6600;
+    margin-top: 20px;
+}
+
+.tour-info ul {
+    padding-left: 20px;
+}
+
+form input,
+form button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+form input:focus {
+    border-color: #ff6600;
+    outline: none;
+}
+
+form button {
+    background: linear-gradient(45deg, #ffcc33, #ffaa00);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(45deg, #ffaa00, #ff9900);
+    transform: scale(1.05);
+}
+
+/* ============================= */
+/* 3D-Style Square Carousel      */
+/* ============================= */
+.carousel-3d {
+    position: relative;
+    width: 100%;
+    padding-top: 20%; /* Square container for responsiveness */
+    perspective: 1200px;
+    margin: 20px 0; /* Reduced from 30px to 20px */
+}
+
+.carousel-3d .carousel-slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform-origin: center center;
+    opacity: 0.3;
+    transition: transform 1s ease, opacity 1s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transform: translate(-50%, -50%);
+}
+
+.carousel-3d .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-3d .carousel-slide.active {
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 3;
+    opacity: 1;
+}
+
+.carousel-3d .carousel-slide.prev {
+    transform: translate(-160%, -50%) scale(0.7) rotateY(20deg);
+    z-index: 2;
+    opacity: 0.6;
+}
+
+.carousel-3d .carousel-slide.next {
+    transform: translate(60%, -50%) scale(0.7) rotateY(-20deg);
+    z-index: 2;
+    opacity: 0.6;
+}
+
+.carousel-3d .carousel-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1em;
+    z-index: 5;
+    white-space: nowrap;
+}
+
+footer {
+    background: #5a3725;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+footer a {
+    color: #ffcc33;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .tour-info {
+        flex-direction: column;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1.1em;
+    }
+
+    .carousel-3d .carousel-slide {
+        width: 150px;
+        height: 150px;
+    }
+
+    .carousel-3d .carousel-slide.prev {
+        transform: translate(-130%, -50%) scale(0.6) rotateY(20deg);
+    }
+
+    .carousel-3d .carousel-slide.next {
+        transform: translate(50%, -50%) scale(0.6) rotateY(-20deg);
+    }
+}
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>{{ tour.title }}</h1>
+        <p>{{ tour.subtitle }}</p>
+    </div>
 </section>
 
-<section class="container">
-  <div class="place-details">
-    <p>{{ tour.description }}</p>
-    <p><strong>Days:</strong> {{ tour.days }} — <strong>Price:</strong> €{{ "%.2f"|format(tour.price) }}</p>
+<div id="welcome-msg">{{ tour.welcome_msg }}</div>
 
-    <h3>Book this tour</h3>
-    <form onsubmit="return submitPlaceBooking(event)">
-      <input type="hidden" id="place_tour_id" value="{{ tour.id }}">
-      <input id="place_name" placeholder="Your name" required />
-      <input id="place_email" placeholder="Email" />
-      <input id="place_phone" placeholder="Phone" />
-      <button type="submit">Book</button>
-      <div id="place-status"></div>
-    </form>
-  </div>
-</section>
+<!-- Main Tour Info -->
+<div class="container tour-info">
+    <div class="tour-info-left">
+        <h2>About this Tour</h2>
+        <p>{{ tour.description }}</p>
+
+        {% if tour.highlights %}
+        <h3>Tour Highlights</h3>
+        <ul>
+            {% for highlight in tour.highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <h3>Details</h3>
+        <p><strong>Days:</strong> {{ tour.days }}</p>
+        <p><strong>Price:</strong> €{{ "%.2f"|format(tour.price) }}</p>
+    </div>
+
+    <div class="tour-info-right">
+        <h3>Book this Tour</h3>
+        <form onsubmit="return submitPlaceBooking(event)">
+            <input type="hidden" id="place_tour_id" value="{{ tour.id }}">
+            <input id="place_name" placeholder="Your Name" required>
+            <input id="place_email" placeholder="Email">
+            <input id="place_phone" placeholder="Phone">
+            <button type="submit">Book Now</button>
+            <div id="place-status" style="margin-top:10px;"></div>
+        </form>
+    </div>
+</div>
+
+<!-- Places Carousel -->
+{% if tour.places_to_visit %}
+<h3 style="text-align:center;">Places to Visit</h3>
+<div class="carousel-3d" id="places-carousel">
+    {% for img in tour.gallery %}
+    <div class="carousel-slide{% if loop.index0 == 0 %} active{% endif %}">
+        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="Place Image">
+        <div class="carousel-caption">{{ tour.places_to_visit[loop.index0] }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Cuisine Carousel -->
+{% if tour.cuisine %}
+<h3 style="text-align:center;">Local Cuisine</h3>
+<div class="carousel-3d" id="cuisine-carousel">
+    {% for food in tour.cuisine %}
+    <div class="carousel-slide{% if loop.index0 == 0 %} active{% endif %}">
+        <img src="{{ url_for('static', filename='images/' ~ tour.img.split('.')[0] ~ '_food' ~ loop.index ~ '.jpg') }}" alt="Cuisine Image {{ loop.index }}">
+        <div class="carousel-caption">{{ food }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
 <script>
+window.addEventListener('load', () => {
+    document.getElementById('welcome-msg').style.opacity = 1;
+});
+
+/* Booking */
 async function submitPlaceBooking(e){
-  e.preventDefault();
-  const payload = {
-    tour_id: parseInt(document.getElementById('place_tour_id').value),
-    name: document.getElementById('place_name').value,
-    email: document.getElementById('place_email').value,
-    phone: document.getElementById('place_phone').value
-  };
-  const res = await postBooking(payload);
-  const s = document.getElementById('place-status');
-  if(res.status===201){
-    s.textContent = "Booking confirmed — thank you!";
-    s.style.color = "lightgreen";
-    e.target.reset();
-  } else {
-    s.textContent = res.body && res.body.error ? res.body.error : "Booking failed";
-    s.style.color = "salmon";
-  }
-  return false;
+    e.preventDefault();
+    const payload = {
+        tour_id: parseInt(document.getElementById('place_tour_id').value),
+        name: document.getElementById('place_name').value,
+        email: document.getElementById('place_email').value,
+        phone: document.getElementById('place_phone').value
+    };
+    const res = await postBooking(payload);
+    const statusEl = document.getElementById('place-status');
+    if(res.status === 201){
+        statusEl.textContent = "Booking confirmed — thank you!";
+        statusEl.style.color = "lightgreen";
+        e.target.reset();
+    } else {
+        statusEl.textContent = res.body?.error || "Booking failed";
+        statusEl.style.color = "salmon";
+    }
+    return false;
 }
+
+/* 3D Carousel Logic */
+function init3DCarousel(carouselId, interval=3000){
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    let current = 0;
+
+    function updateSlides() {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active','prev','next');
+            if(i === current) slide.classList.add('active');
+            else if(i === (current-1+slides.length)%slides.length) slide.classList.add('prev');
+            else if(i === (current+1)%slides.length) slide.classList.add('next');
+        });
+    }
+
+    updateSlides();
+    setInterval(() => {
+        current = (current + 1) % slides.length;
+        updateSlides();
+    }, interval);
+}
+
+window.addEventListener('load', () => {
+    init3DCarousel('places-carousel', 3000);
+    init3DCarousel('cuisine-carousel', 3000);
+});
 </script>
+
 {% endblock %}

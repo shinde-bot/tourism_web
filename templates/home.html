@@ -36,30 +36,35 @@
     <!-- Text Section -->
     <div style="flex: 1; min-width: 350px; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
       <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 48px; margin-bottom: 20px; color: #ffcc33; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
-        About India
+        India: A Journey Like No Other
       </h2>
       <p style="font-family: Georgia, serif; font-size: 20px; line-height: 1.8; text-align: left; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px;">
-        India is a land of diverse cultures, breathtaking landscapes, and rich history. 
-        From the snow-capped mountains of the Himalayas to the serene backwaters of Kerala, 
-        India offers an endless array of experiences. Discover majestic palaces, vibrant festivals, 
-        pristine beaches, and delicious cuisine. Every journey in India is a story waiting to be told.
+        India is a place of unending fascination where lively modern life coexists with age-old customs. Every part of India offers a fresh experience, from the peaceful backwaters of Kerala to the golden sands of Rajasthan's deserts, from the snow-capped peaks of the Himalayas to the verdant tea plantations of Darjeeling. Discover magnificent palaces, imposing forts, and hallowed temples that evoke tales from bygone eras. Discover the vitality of vibrant markets, the beat of vibrant celebrations, and the friendliness of its populace. 
       </p>
 
       <!-- YouTube Link -->
-      <a href="https://youtu.be/rTDaZoDDW5g?si=lFJj_y9DAQlTxopu" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; background: #fff; padding: 10px 18px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s ease;">
-        <img src="{{ url_for('static', filename='images/youtube-icon.png') }}" width="50" height="50" alt="YouTube">
-        <span style="color:#ff0000; font-weight: 700; font-family: 'Arial', sans-serif;">Watch Video</span>
-      </a>
-    </div>
+      <a href="https://youtu.be/rTDaZoDDW5g?si=lFJj_y9DAQlTxopu" target="_blank"
+   style="display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; 
+          background: rgba(255,255,255,0.3); /* semi-transparent background */
+          padding: 10px 18px; border-radius: 12px; 
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+          transition: all 0.3s ease;
+          backdrop-filter: blur(8px); /* blur effect */
+          -webkit-backdrop-filter: blur(8px); /* for Safari */
+          ">
+  <img src="{{ url_for('static', filename='images/youtube-icon.png') }}" width="50" height="50" alt="YouTube">
+  <span style="color:#ff0000; font-weight: 700; font-family: 'Arial', sans-serif;">Take the Tour !</span>
+</a>
 
     <!-- Map Section -->
-    <div style="flex: 1; min-width: 350px; text-align: center; transition: transform 0.4s; cursor: pointer;">
-      <img src="{{ url_for('static', filename='images/india-map.png') }}" width="400" height="300" alt="India Map" style="border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);" 
-        onmouseover="this.style.transform='scale(1.08)';" 
-        onmouseout="this.style.transform='scale(1)';">
-    </div>
+ <div style="flex: 1; min-width: 250px; text-align: center; transition: transform 0.4s; ">
+  <img src="{{ url_for('static', filename='images/symbol.png') }}" 
+       width="350" 
+       height="250"
+       style="border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);" 
+    >
+</div>
 
-  </div>
 </section>
 
 

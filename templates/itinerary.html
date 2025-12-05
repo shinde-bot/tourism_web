@@ -1,25 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-  <h2>India Itinerary</h2>
-  <div class="it-grid">
-    {% for t in tours %}
-      <div class="it-card">
-        <img src="{{ url_for('static', filename='images/' + t.img) }}">
-        <h3>{{ t.title }}</h3>
-        <p>Days: {{ t.days }}</p>
-        <p>{{ t.description[:140] }}...</p>
-        {% if t.hotels %}
-          <p><strong>Hotels:</strong> 
-            {% for h in t.hotels %}
-              {{ h.name }} (€{{ "%.2f"|format(h.price_per_night) }}){% if not loop.last %}, {% endif %}
-            {% endfor %}
-          </p>
-        {% endif %}
-        <p><strong>Price:</strong> €{{ "%.2f"|format(t.price) }}</p>
-        <a href="/place/{{ t.id }}">Details</a>
-      </div>
-    {% endfor %}
+<section class="itinerary-section" style="padding: 60px 20px; background: #fff8f0;">
+  <div class="container" style="max-width:1200px; margin:0 auto;">
+    <h2 style="font-family:'Times New Roman', Times, serif; font-size:42px; text-align:center; margin-bottom:40px; color:#ff6600;">India Itinerary</h2>
+
+    <div class="it-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+      {% for t in tours %}
+        <div class="it-card" style="background:#fff0e6; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.15); transition: transform 0.3s;">
+          <img src="{{ url_for('static', filename='images/' + t.img) }}" style="width:100%; height:200px; object-fit:cover;">
+          <div style="padding:20px;">
+            <h3 style="color:#ff0066; margin-bottom:10px;">{{ t.title }}</h3>
+            <p><strong>Days:</strong> {{ t.days }}</p>
+            <p style="font-size:14px; line-height:1.6;">{{ t.description[:200] }}{% if t.description|length > 200 %}...{% endif %}</p>
+            
+            {% if t.highlights %}
+            <h4 style="margin-top:10px;">Highlights:</h4>
+            <ul style="margin:5px 0 10px 20px; font-size:14px; line-height:1.5;">
+              {% for highlight in t.highlights %}
+                <li>{{ highlight }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if t.hotels %}
+              <p><strong>Hotels:</strong> 
+                {% for h in t.hotels %}
+                  {{ h.name }} (€{{ "%.2f"|format(h.price_per_night) }}){% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </p>
+            {% endif %}
+            <p><strong>Price:</strong> €{{ "%.2f"|format(t.price) }}</p>
+
+            <a href="/place/{{ t.id }}" style="display:inline-block; margin-top:10px; padding:10px 20px; background:#ffcc33; color:#000; border-radius:8px; font-weight:600; text-decoration:none; transition:all 0.3s;">View Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}
