@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ e.title }} — Experience{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="details-hero" 
+         style="background-image: url('{{ url_for('static', filename='images/' + e.img) }}'); 
+                background-size: cover; background-position: center; padding:120px 0; text-align:center; color:#fff;">
+  <div class="details-hero-inner" style="background: rgba(0,0,0,0.4); display:inline-block; padding:20px 40px; border-radius:12px;">
+    <h1 style="font-size:48px; margin-bottom:10px;">{{ e.title }}</h1>
+    {% if e.short_desc %}
+    <p style="font-size:18px; max-width:700px; margin:0 auto;">{{ e.short_desc }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Breadcrumb / Back link -->
+<section style="padding:20px; max-width:1200px; margin:20px auto; font-size:16px;">
+    <a href="{{ url_for('experiences') }}" style="color:#0077cc; text-decoration:none;">&larr; Back to Experiences</a>
+</section>
+
+<!-- Main Content -->
+<section class="details-content container" style="max-width:900px; margin:0 auto; padding:40px 20px; font-size:18px; line-height:1.8;">
+  <p>{{ e.long_desc }}</p>
+</section>
+
+{% endblock %}

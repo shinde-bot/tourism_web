@@ -44,3 +44,4 @@ def reset():
 def dashboard():
     # Dummy dashboard; extend with auth as needed
     return render_template("dashboard.html")
+

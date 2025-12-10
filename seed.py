@@ -1,10 +1,12 @@
 from app import create_app
 from extensions import db
-from models import Tour
+from models import Tour, Experience
 
 app = create_app()
 
-# Sample tours without hotels, ready for gallery and cuisine images
+# -------------------------------
+# Sample Tours
+# -------------------------------
 sample = [
     {
         "title": "Uttarakhand Adventure",
@@ -92,10 +94,14 @@ sample = [
     }
 ]
 
+# -------------------------------
+# Seed DB
+# -------------------------------
 with app.app_context():
     db.drop_all()
     db.create_all()
 
+    # Add Tours
     for s in sample:
         t = Tour(
             title=s['title'],
@@ -115,3 +121,56 @@ with app.app_context():
 
     db.session.commit()
     print("Seeded DB with tours, places & cuisine images, hotels removed.")
+
+    # -------------------------------
+    # Add Visitor Experiences (Uttarakhand & Manali) WITHOUT model fields rating/top_pick
+    # Keep rating/top_pick info in dict for HTML logic
+    # -------------------------------
+    sample_experiences = [
+        # Uttarakhand
+        {
+            "title": "Golden Temple Visit",
+    "short_desc": "Spiritual and architectural marvel.",
+    "long_desc": "Visited the Golden Temple in Amritsar. The serene atmosphere, stunning architecture, and the community kitchen made it an unforgettable spiritual experience.",
+    "img": "golden.jpg",
+    "rating": 5
+        },
+        {"title": "Mussoorie",
+        "short_desc": "Stroll through the charming Landour Market.",
+        "long_desc": "Explored the quaint Landour Market with its cozy cafes, local shops, and colonial-era charm. Perfect for shopping, relaxing, and soaking in the local vibe.",
+        "img": "mussorie.jpg",
+        "rating": 4
+        },
+        # Manali
+        {
+            
+    "title": "Kasol",
+    "short_desc": "Trekking along the Parvati River.",
+    "long_desc": "Trekking in Kasol along the Parvati River was an unforgettable adventure. The scenic trails, lush forests, and riverside camps made it a perfect escape into nature.",
+    "img": "kasol.jpg",
+    "rating": 3
+}
+
+            
+        ,
+        {
+            "title": "Haridwar Ganga Aarti Experience",
+            "short_desc": "Witness the mesmerizing evening Ganga Aarti.",
+            "long_desc": "We visited Haridwar and attended the evening Ganga Aarti on the ghats. The devotional chants, lamps, and floating diyas created an unforgettable spiritual experience.",
+            "img": "hardiwar.jpg",
+            "rating": 5,
+        }
+
+    ]
+
+    for e_data in sample_experiences:
+        e = Experience(
+            title=e_data['title'],
+            short_desc=e_data.get('short_desc', ''),
+            long_desc=e_data.get('long_desc', ''),
+            img=e_data.get('img', 'default.jpg')
+        )
+        db.session.add(e)
+
+    db.session.commit()
+    print("Visitor Experiences for Uttarakhand and Manali added successfully.")
