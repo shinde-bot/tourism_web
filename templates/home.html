@@ -67,6 +67,65 @@
 
 </section>
 
+<!-- ---------- Popular Things Carousel ---------- -->
+<section class="popular-carousel" style="padding: 80px 40px; background: #fdf6e3; text-align: center;">
+    <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 36px; color: #d35400; margin-bottom: 20px;">
+        Popular Things to Buy in Different Cities
+    </h2>
+    <p style="font-family: Georgia, serif; font-size: 18px; color: #333; max-width: 900px; margin: 0 auto 40px;">
+        Explore unique souvenirs and specialties from different parts of India.
+    </p>
+
+    <!-- Carousel Container -->
+    <div class="carousel-wrapper" style="overflow: hidden; max-width: 1200px; margin: 0 auto; perspective: 1000px;">
+        <div class="carousel" style="display: flex; gap: 30px; animation: scroll 12s linear infinite; will-change: transform;">
+
+            <!-- ---------- Cards (original sequence) ---------- -->
+            {% set cities = [
+                {'name':'Jaipur','img':'pottery.jpg','desc':'Famous for vibrant Blue Pottery and traditional Rajasthani crafts.'},
+                {'name':'Agra','img':'marble.jpg','desc':'Known for exquisite Marble Crafts and miniature Taj Mahal replicas.'},
+                {'name':'Varanasi','img':'silk.jpg','desc':'Famed for handwoven Silk Sarees and Banarasi embroidery.'},
+                {'name':'Kerala','img':'spices.jpg','desc':'Known for Spices, perfect for gifts.'},
+                {'name':'Goa','img':'cashew.jpg','desc':'Famous for Cashew Nuts and vibrant local handicrafts.'},
+                {'name':'Konkan','img':'mango.jpg','desc':'Famous for Alphonso Delicacies, perfect for food lovers.'},
+                {'name':'Rann of Kutch','img':'bandhani.jpg','desc':'Known for exquisite Bandhani Textiles and traditional handicrafts.'}
+            ] %}
+
+            {% for city in cities %}
+            <div class="carousel-card" style="flex: 0 0 280px; background:#fff; border-radius:50px; padding:20px; box-shadow:0 6px 16px rgba(0,0,0,0.15); text-align:center;">
+                <img src="{{ url_for('static', filename='images/' + city.img) }}" alt="{{ city.name }}" 
+                     style="width:100%; height:200px; object-fit:cover; border-radius:50px; margin-bottom:12px;">
+                <h3 style="color:#d35400; font-family: 'Poppins', sans-serif;">{{ city.name }}</h3>
+                <p style="font-size:0.95rem; color:#555;">{{ city.desc }}</p>
+            </div>
+            {% endfor %}
+
+            <!-- Simple Discover More Button -->
+            <div style="margin-top: 30px;">
+                <a href="/all-cities" 
+                   style="padding: 12px 28px; background-color: #d35400; color: #fff; text-decoration: none; font-weight: 600; border-radius: 6px; font-family: 'Poppins', sans-serif; display: inline-block;">
+                    Discover More Cities
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.carousel {
+    display: flex;
+    gap: 30px;
+    animation: scroll 12s linear infinite; /* increased speed */
+    will-change: transform;
+}
+</style>
+
+
 
 
 

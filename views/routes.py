@@ -45,3 +45,9 @@ def dashboard():
     # Dummy dashboard; extend with auth as needed
     return render_template("dashboard.html")
 
+@views_bp.route("/about")
+def about():
+    # You can pass tours if needed for other sections, or leave empty
+    tours = Tour.query.order_by(Tour.created_at.desc()).limit(6).all()
+    show_about_only = True  # Flag to show only the About India section
+    return render_template("home.html", tours=tours, show_about_only=show_about_only)

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-O8C3F3jNwRZp30g3bFZ6qF1S2f0b5+QF2YDx5Yh1qQ8+fKQ7ZPvP6tGz/xx8sWz7z+ZL5C3PZ7qOxy5R6UdxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,12 +30,43 @@
   <!-- Main content -->
   {% block content %}{% endblock %}
 
-  <!-- Footer -->
-  <footer class="site-footer" id="contacts">
-    <div class="container">
-      <p>© India Tours</p>
+ <!-- Footer -->
+<footer class="site-footer" style="background: url('{{ url_for('static', filename='images/footer.jpg') }}') center/cover no-repeat; color:#fff; padding:80px 20px; text-align:center; position:relative;">
+ 
+    
+    
+    <!-- Useful Links -->
+    <div style="display:flex; gap:25px; flex-wrap:wrap; justify-content:center; font-family:'Poppins', sans-serif; font-weight:600;">
+      <a href="/" style="color:#141010; text-decoration:none;">Home</a>
+      <a href="/experiences" style="color:#120e0e; text-decoration:none;">Experiences</a>
+      <a href="/itinerary" style="color:#0c0a0a; text-decoration:none;">Destinations</a>
+      <a href="#book" style="color:#090808; text-decoration:none;">Contact</a>
     </div>
-  </footer>
+
+    <!-- Social Media Handles -->
+<div style="display:flex; gap:20px; justify-content:center; align-items:center; margin-top:10px; font-size:28px;">
+  <a href="https://instagram.com/your_handle" target="_blank" style="color:#131111;">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://facebook.com/your_handle" target="_blank" style="color:#060606;">
+    <i class="fab fa-facebook"></i>
+  </a>
+  <a href="https://twitter.com/your_handle" target="_blank" style="color:#100d0d;">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="https://linkedin.com/in/your_handle" target="_blank" style="color:#0e0d0d;">
+    <i class="fab fa-linkedin"></i>
+  </a>
+</div>
+
+
+    <!-- Footer Text -->
+    <p style="margin-top:20px; font-size:0.9rem; color:#0c0a0a;">
+      © {{ current_year if current_year is defined else 2025 }} India Tours. All rights reserved.
+    </p>
+  </div>
+</footer>
+
 
   <!-- Scripts -->
   <script>
