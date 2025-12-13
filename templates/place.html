@@ -289,17 +289,7 @@ footer a:hover {
         <p><strong>Price:</strong> €{{ "%.2f"|format(tour.price) }}</p>
     </div>
 
-    <div class="tour-info-right">
-        <h3>Book this Tour</h3>
-        <form onsubmit="return submitPlaceBooking(event)">
-            <input type="hidden" id="place_tour_id" value="{{ tour.id }}">
-            <input id="place_name" placeholder="Your Name" required>
-            <input id="place_email" placeholder="Email">
-            <input id="place_phone" placeholder="Phone">
-            <button type="submit">Book Now</button>
-            <div id="place-status" style="margin-top:10px;"></div>
-        </form>
-    </div>
+   
 </div>
 
 <!-- Places Carousel -->
@@ -333,27 +323,7 @@ window.addEventListener('load', () => {
     document.getElementById('welcome-msg').style.opacity = 1;
 });
 
-/* Booking */
-async function submitPlaceBooking(e){
-    e.preventDefault();
-    const payload = {
-        tour_id: parseInt(document.getElementById('place_tour_id').value),
-        name: document.getElementById('place_name').value,
-        email: document.getElementById('place_email').value,
-        phone: document.getElementById('place_phone').value
-    };
-    const res = await postBooking(payload);
-    const statusEl = document.getElementById('place-status');
-    if(res.status === 201){
-        statusEl.textContent = "Booking confirmed — thank you!";
-        statusEl.style.color = "lightgreen";
-        e.target.reset();
-    } else {
-        statusEl.textContent = res.body?.error || "Booking failed";
-        statusEl.style.color = "salmon";
-    }
-    return false;
-}
+
 
 /* 3D Carousel Logic */
 function init3DCarousel(carouselId, interval=3000){

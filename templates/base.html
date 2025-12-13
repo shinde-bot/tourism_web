@@ -1,12 +1,13 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-O8C3F3jNwRZp30g3bFZ6qF1S2f0b5+QF2YDx5Yh1qQ8+fKQ7ZPvP6tGz/xx8sWz7z+ZL5C3PZ7qOxy5R6UdxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>{% block title %}India Tours{% endblock %}</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-O8C3F3jNwRZp30g3bFZ6qF1S2f0b5+QF2YDx5Yh1qQ8+fKQ7ZPvP6tGz/xx8sWz7z+ZL5C3PZ7qOxy5R6UdxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <!-- Header -->
@@ -18,11 +19,11 @@
 
       <nav class="main-nav">
         <a href="/itinerary">Destinations</a>
-
-        <!-- FIXED: direct link to experiences page -->
         <a href="/experiences">Experiences</a>
 
-        <a class="btn-book" href="#book">Sign in/Sign up</a>
+        <!-- Sign In / Sign Up -->
+        <a class="btn-book" href="{{ url_for('views.login') }}">Sign In</a>
+        <a class="btn-book" href="{{ url_for('views.register') }}">Register</a>
       </nav>
     </div>
   </header>
@@ -30,43 +31,31 @@
   <!-- Main content -->
   {% block content %}{% endblock %}
 
- <!-- Footer -->
-<footer class="site-footer" style="background: url('{{ url_for('static', filename='images/Footer1.png') }}') center/cover no-repeat; color:#fff; padding:80px 20px; text-align:center; position:relative;">
- 
-    
-    
-    <!-- Useful Links -->
-    <div style="display:flex; gap:25px; flex-wrap:wrap; justify-content:center; font-family:'Poppins', sans-serif; font-weight:600;">
-      <a href="/" style="color:#ffffff; text-decoration:none;">Home</a>
-      <a href="/experiences" style="color:#ffffff; text-decoration:none;">Experiences</a>
-      <a href="/itinerary" style="color:#ffffff; text-decoration:none;">Destinations</a>
-      <a href="#book" style="color:#ffffff; text-decoration:none;">Contact</a>
+  <!-- Footer -->
+  <footer class="site-footer" style="background: url('{{ url_for('static', filename='images/Footer1.png') }}') center/cover no-repeat; color:#fff; padding:80px 20px; text-align:center; position:relative;">
+    <div>
+      <!-- Useful Links -->
+      <div style="display:flex; gap:25px; flex-wrap:wrap; justify-content:center; font-family:'Poppins', sans-serif; font-weight:600;">
+        <a href="/" style="color:#060606; text-decoration:none;">Home</a>
+        <a href="/experiences" style="color:#181515; text-decoration:none;">Experiences</a>
+        <a href="/itinerary" style="color:#070707; text-decoration:none;">Destinations</a>
+        <a href="#book" style="color:#0e0c0c; text-decoration:none;">Contact</a>
+      </div>
+
+      <!-- Social Media Handles -->
+      <div style="display:flex; gap:20px; justify-content:center; align-items:center; margin-top:10px; font-size:28px;">
+        <a href="https://instagram.com/your_handle" target="_blank" style="color:#121111;"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com/your_handle" target="_blank" style="color:#ffffff;"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/your_handle" target="_blank" style="color:#ffffff;"><i class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com/in/your_handle" target="_blank" style="color:#ffffff;"><i class="fab fa-linkedin"></i></a>
+      </div>
+
+      <!-- Footer Text -->
+      <p style="margin-top:20px; font-size:0.9rem; color:#050505;">
+        © {{ current_year if current_year is defined else 2025 }} India Tours. All rights reserved.
+      </p>
     </div>
-
-    <!-- Social Media Handles -->
-<div style="display:flex; gap:20px; justify-content:center; align-items:center; margin-top:10px; font-size:28px;">
-  <a href="https://instagram.com/your_handle" target="_blank" style="color:#ffffff;">
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a href="https://facebook.com/your_handle" target="_blank" style="color:#ffffff;">
-    <i class="fab fa-facebook"></i>
-  </a>
-  <a href="https://twitter.com/your_handle" target="_blank" style="color:#ffffff;">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a href="https://linkedin.com/in/your_handle" target="_blank" style="color:#ffffff;">
-    <i class="fab fa-linkedin"></i>
-  </a>
-</div>
-
-
-    <!-- Footer Text -->
-    <p style="margin-top:20px; font-size:0.9rem; color:#ffffff;">
-      © {{ current_year if current_year is defined else 2025 }} India Tours. All rights reserved.
-    </p>
-  </div>
-</footer>
-
+  </footer>
 
   <!-- Scripts -->
   <script>

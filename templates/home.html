@@ -2,12 +2,10 @@
 {% block title %}Home — India Tours{% endblock %}
 
 {% block content %}
+<!-- Hero Section -->
 <section class="hero" style="background-image:url('{{ url_for('static', filename='images/hero.gif') }}')">
   <div class="hero-inner">
-    <!-- Main Hero Title -->
     <h1 class="hero-title">Discover India</h1>
-
-    <!-- Thumbnails row as direct links -->
     <div class="thumb-row">
       {% for t in tours %}
       <div class="thumb-card">
@@ -24,47 +22,24 @@
   </div>
 </section>
 
-<!-- About India Section (Full Width) -->
+<!-- About India Section -->
 <section class="about-india" style="position: relative; overflow: hidden; padding: 80px 40px;">
-
-  <!-- Indian flag background -->
-  <div style="position: absolute; inset: 0; background-image: url('{{ url_for('static', filename='images/india-flag.jpg') }}'); background-size: cover; background-position: center; filter: brightness(0.6); z-index: 0;"></div>
-
-  <!-- Content on top of flag -->
+  <div style="position: absolute; inset: 0; background-image: url('{{ url_for('static', filename='images/india-flag.jpg') }}'); background-size: cover; filter: brightness(0.6); z-index: 0;"></div>
   <div style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 40px; max-width: 1200px; margin: 0 auto;">
-    
-    <!-- Text Section -->
     <div style="flex: 1; min-width: 350px; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
-      <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 48px; margin-bottom: 20px; color: #ffcc33; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
-        India: A Journey Like No Other
-      </h2>
-      <p style="font-family: Georgia, serif; font-size: 20px; line-height: 1.8; text-align: left; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px;">
-        India is a place of unending fascination where lively modern life coexists with age-old customs. Every part of India offers a fresh experience, from the peaceful backwaters of Kerala to the golden sands of Rajasthan's deserts, from the snow-capped peaks of the Himalayas to the verdant tea plantations of Darjeeling. Discover magnificent palaces, imposing forts, and hallowed temples that evoke tales from bygone eras. Discover the vitality of vibrant markets, the beat of vibrant celebrations, and the friendliness of its populace. 
+      <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 48px; margin-bottom: 20px; color: #ffcc33;">India: A Journey Like No Other</h2>
+      <p style="font-family: Georgia, serif; font-size: 20px; line-height: 1.8; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px;">
+        India is a place of unending fascination where lively modern life coexists with age-old customs. Every part of India offers a fresh experience...
       </p>
-
-      <!-- YouTube Link -->
-      <a href="https://youtu.be/rTDaZoDDW5g?si=lFJj_y9DAQlTxopu" target="_blank"
-   style="display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; 
-          background: rgba(255,255,255,0.3); /* semi-transparent background */
-          padding: 10px 18px; border-radius: 12px; 
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
-          transition: all 0.3s ease;
-          backdrop-filter: blur(8px); /* blur effect */
-          -webkit-backdrop-filter: blur(8px); /* for Safari */
-          ">
-  <img src="{{ url_for('static', filename='images/youtube-icon.png') }}" width="50" height="50" alt="YouTube">
-  <span style="color:#ff0000; font-weight: 700; font-family: 'Arial', sans-serif;">Take the Tour !</span>
-</a>
-
-    <!-- Map Section -->
- <div style="flex: 1; min-width: 250px; text-align: center; transition: transform 0.4s; ">
-  <img src="{{ url_for('static', filename='images/symbol.png') }}" 
-       width="350" 
-       height="250"
-       style="border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);" 
-    >
-</div>
-
+      <a href="https://youtu.be/rTDaZoDDW5g?si=lFJj_y9DAQlTxopu" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; background: rgba(255,255,255,0.3); padding: 10px 18px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+        <img src="{{ url_for('static', filename='images/youtube-icon.png') }}" width="50" height="50" alt="YouTube">
+        <span style="color:#ff0000; font-weight: 700;">Take the Tour !</span>
+      </a>
+    </div>
+    <div style="flex: 1; min-width: 250px; text-align: center;">
+      <img src="{{ url_for('static', filename='images/symbol.png') }}" width="350" height="250" style="border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+    </div>
+  </div>
 </section>
 
 <!-- ---------- Popular Things Carousel ---------- -->
@@ -100,13 +75,7 @@
             </div>
             {% endfor %}
 
-            <!-- Simple Discover More Button -->
-            <div style="margin-top: 30px;">
-                <a href="/all-cities" 
-                   style="padding: 12px 28px; background-color: #d35400; color: #fff; text-decoration: none; font-weight: 600; border-radius: 6px; font-family: 'Poppins', sans-serif; display: inline-block;">
-                    Discover More Cities
-                </a>
-            </div>
+            
         </div>
     </div>
 </section>
@@ -127,45 +96,137 @@
 
 
 
+<style>
+/* ===============================
+   Contact / Itinerary Form
+================================ */
 
 
-<section class="contact" id="book">
-  <div class="container">
-    <h2>Get Your Itinerary</h2>
-    <div class="contact-inner">
-      <form id="contact-form" onsubmit="return submitContact(event)">
-        <input type="hidden" id="tour_id" name="tour_id" value="{{ tours[0].id if tours else '' }}">
-        <label>Your Name</label>
-        <input id="name" name="name" required/>
-        <label>Email</label>
-        <input id="email" name="email" required/>
-        <label>Phone</label>
-        <input id="phone" name="phone"/>
-        <label>Comment</label>
-        <textarea id="comment" name="comment"></textarea>
-        <button type="submit">Send Itinerary</button>
-        <div id="contact-status"></div>
+.contact h2 {
+  font-family: "Times New Roman", serif;
+  font-size: 32px;
+  color: #d35400;
+  text-align: center;
+}
+
+.contact .card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.contact label {
+  font-weight: 600;
+  color: #333;
+}
+
+.contact input,
+.contact select,
+.contact textarea {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+.contact input:focus,
+.contact select:focus,
+.contact textarea:focus {
+  outline: none;
+  border-color: #d35400;
+  box-shadow: 0 0 0 2px rgba(211,84,0,0.15);
+}
+
+.contact textarea {
+  resize: none;
+}
+
+.contact button {
+  background: #d35400;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact button:hover {
+  background: #b84300;
+  transform: translateY(-2px);
+}
+
+.alert {
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .contact h2 {
+    font-size: 26px;
+  }
+}
+
+</style>
+
+<!-- Contact / Itinerary Form -->
+<section class="contact" id="book" style="padding: 60px 20px">
+  <div class="container" style="max-width: 800px; margin: 0 auto;">
+    <h2 class="text-center mb-4">Request Your Itinerary</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ 'alert-success' if category=='success' else 'alert-danger' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card p-4 shadow-sm" style="border-radius:12px;font-family: 'Poppins', sans-serif;color: #d35400;">
+      <form id="contact-form" method="POST" action="{{ url_for('views.submit') }}">
+        <!-- Tour Dropdown -->
+        <div class="mb-3">
+          <label for="tour_id" class="form-label">Select Tour <span class="text-danger">*</span></label>
+          <select id="tour_id" name="tour_id" class="form-control" required>
+            {% for t in tours %}
+              <option value="{{ t.id }}" {% if loop.first %}selected{% endif %}>{{ t.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="+91 12345 67890">
+        </div>
+
+        <!-- Comment / Destination -->
+        <div class="mb-3">
+          <label for="comment" class="form-label">Destination Name <span class="text-danger">*</span></label>
+          <textarea class="form-control" id="comment" name="comment" placeholder="E.g. Goa, Delhi, Kerala..." rows="4" required></textarea>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary px-5">Send Itinerary</button>
+        </div>
       </form>
-      <div class="contact-image" style="background-image:url('{{ url_for('static', filename='images/footer-bg.jpg') }}')"></div>
     </div>
   </div>
 </section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-      document.querySelectorAll('.thumb-card, .inc-card').forEach(function(el) {
-        el.classList.add('start');
-      });
-    }, 80);
-  });
-
-  function submitContact(e){
-    e.preventDefault();
-    const status = document.getElementById('contact-status');
-    status.textContent = 'Sending...';
-    setTimeout(() => status.textContent = 'Itinerary request sent! We will email you shortly.', 800);
-    return false;
-  }
-</script>
 {% endblock %}

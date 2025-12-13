@@ -474,7 +474,7 @@ body {
 /* Contact */
 .contact {
   padding: 60px 0;
-  background: linear-gradient(to bottom, #ffe6cc, #ffcc99);
+  background: #fdf6e3;
 }
 .contact-inner { display: flex; gap: 30px; flex-wrap: wrap; align-items: stretch; }
 #contact-form {
@@ -491,7 +491,7 @@ body {
   border-radius: 8px;
   border: 1px solid #ffd699;
   background: #fff;
-  color: #333;
+  color: #d35400;
   font-size: 14px;
 }
 #contact-form button {
@@ -503,7 +503,7 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
-#contact-form button:hover { transform: scale(1.05); background: #ff3399; }
+#contact-form button{ transform: scale(1.05); background: #d35400; }
 
 /* Place Page */
 .place-hero { height: 420px; background-size: cover; display: flex; align-items: center; color: var(--light); position: relative; }

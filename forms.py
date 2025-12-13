@@ -1,43 +1,57 @@
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+# forms.py
 from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-# --- Login Form ---
-class LoginForm(FlaskForm):
+# -------------------------------
+# Registration Form
+# -------------------------------
+class RegisterForm(FlaskForm):
     username = StringField(
-        'Username', 
-        validators=[DataRequired(), Length(min=3, max=80)]
-    )
-    password = PasswordField(
-        'Password', 
-        validators=[DataRequired(), Length(min=8, max=128)]
-    )
-    submit = SubmitField('Log In')
-
-# --- Registration Form ---
-class RegistrationForm(FlaskForm):
-    username = StringField(
-        'Username', 
-        validators=[DataRequired(), Length(min=3, max=80)]
+        "Username", 
+        validators=[
+            DataRequired(message="Username is required"),
+            Length(min=3, max=25, message="Username must be between 3 and 25 characters")
+        ]
     )
     email = StringField(
-        'Email', 
-        validators=[DataRequired(), Email()]
+        "Email", 
+        validators=[
+            DataRequired(message="Email is required"),
+            Email(message="Enter a valid email address")
+        ]
     )
     password = PasswordField(
-        'Password', 
-        validators=[DataRequired(), Length(min=8, max=128)]
+        "Password", 
+        validators=[
+            DataRequired(message="Password is required"),
+            Length(min=6, message="Password must be at least 6 characters long")
+        ]
     )
     confirm_password = PasswordField(
-        'Confirm Password',
-        validators=[DataRequired(), EqualTo('password', message='Passwords must match')]
+        "Confirm Password",
+        validators=[
+            DataRequired(message="Please confirm your password"),
+            EqualTo("password", message="Passwords must match")
+        ]
     )
-    submit = SubmitField('Sign Up')
+    submit = SubmitField("Register")
 
-# --- Forgot Password Form ---
-class ForgotPasswordForm(FlaskForm):
+# -------------------------------
+# Login Form
+# -------------------------------
+class LoginForm(FlaskForm):
     email = StringField(
-        'Email', 
-        validators=[DataRequired(), Email()]
+        "Email", 
+        validators=[
+            DataRequired(message="Email is required"),
+            Email(message="Enter a valid email address")
+        ]
     )
-    submit = SubmitField('Reset Password')
+    password = PasswordField(
+        "Password", 
+        validators=[
+            DataRequired(message="Password is required")
+        ]
+    )
+    submit = SubmitField("Login")

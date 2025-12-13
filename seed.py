@@ -1,13 +1,17 @@
+import argparse
 from app import create_app
 from extensions import db
-from models import Tour, Experience
-
-app = create_app()
+from models import Itinerary, Tour, Experience
 
 # -------------------------------
-# Sample Tours
+# Seed Data
 # -------------------------------
-sample = [
+# You can fill these lists with your full data
+ITINERARIES = [
+    # Example: {"key": "manali_5days", "title": "Manali 5 Days Trip", ...}
+]
+
+TOURS = [
     {
         "title": "Uttarakhand Adventure",
         "subtitle": "Mountains, Trekking & Nature",
@@ -92,85 +96,92 @@ sample = [
         "gallery": ["kashmir1.jpg", "kashmir2.jpg", "kashmir3.jpg"],
         "welcome_msg": "کشمیری حسن میں خوش آمدید!"
     }
+    
+]
+
+EXPERIENCES = [
+    {
+        "title": "Golden Temple Visit",
+        "short_desc": "Spiritual and architectural marvel.",
+        "long_desc": "Visited the Golden Temple in Amritsar. The serene atmosphere, stunning architecture, and the community kitchen made it an unforgettable spiritual experience.",
+        "img": "golden.jpg"
+    },
+    {
+        "title": "Mussoorie",
+        "short_desc": "Stroll through the charming Landour Market.",
+        "long_desc": "Explored the quaint Landour Market with its cozy cafes, local shops, and colonial-era charm. Perfect for shopping, relaxing, and soaking in the local vibe.",
+        "img": "mussorie.jpg"
+    },
+    {
+        "title": "Kasol",
+        "short_desc": "Trekking along the Parvati River.",
+        "long_desc": "Trekking in Kasol along the Parvati River was an unforgettable adventure. The scenic trails, lush forests, and riverside camps made it a perfect escape into nature.",
+        "img": "kasol.jpg"
+    },
+    {
+        "title": "Haridwar Ganga Aarti Experience",
+        "short_desc": "Witness the mesmerizing evening Ganga Aarti.",
+        "long_desc": "We visited Haridwar and attended the evening Ganga Aarti on the ghats. The devotional chants, lamps, and floating diyas created an unforgettable spiritual experience.",
+        "img": "hardiwar.jpg"
+    },
 ]
 
 # -------------------------------
-# Seed DB
+# Seeding Functions
 # -------------------------------
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-
-    # Add Tours
-    for s in sample:
-        t = Tour(
-            title=s['title'],
-            subtitle=s['subtitle'],
-            description=s['description'],
-            days=s['days'],
-            img=s['img'],
-            price=s['price'],
-            highlights=s.get('highlights', []),
-            places_to_visit=s.get('places_to_visit', []),
-            cuisine=s.get('cuisine', []),
-            history=s.get('history', ""),
-            gallery=s.get('gallery', []),
-            welcome_msg=s.get('welcome_msg', f"Welcome to {s['title']}!")
-        )
-        db.session.add(t)
-
+def seed_itineraries():
+    added = 0
+    for it in ITINERARIES:
+        if Itinerary.query.filter_by(key=it["key"]).first():
+            continue
+        db.session.add(Itinerary(**it))
+        added += 1
     db.session.commit()
-    print("Seeded DB with tours, places & cuisine images, hotels removed.")
+    print(f"Seeded itineraries: {added} added.")
 
-    # -------------------------------
-    # Add Visitor Experiences (Uttarakhand & Manali) WITHOUT model fields rating/top_pick
-    # Keep rating/top_pick info in dict for HTML logic
-    # -------------------------------
-    sample_experiences = [
-        # Uttarakhand
-        {
-            "title": "Golden Temple Visit",
-    "short_desc": "Spiritual and architectural marvel.",
-    "long_desc": "Visited the Golden Temple in Amritsar. The serene atmosphere, stunning architecture, and the community kitchen made it an unforgettable spiritual experience.",
-    "img": "golden.jpg",
-    "rating": 5
-        },
-        {"title": "Mussoorie",
-        "short_desc": "Stroll through the charming Landour Market.",
-        "long_desc": "Explored the quaint Landour Market with its cozy cafes, local shops, and colonial-era charm. Perfect for shopping, relaxing, and soaking in the local vibe.",
-        "img": "mussorie.jpg",
-        "rating": 4
-        },
-        # Manali
-        {
-            
-    "title": "Kasol",
-    "short_desc": "Trekking along the Parvati River.",
-    "long_desc": "Trekking in Kasol along the Parvati River was an unforgettable adventure. The scenic trails, lush forests, and riverside camps made it a perfect escape into nature.",
-    "img": "kasol.jpg",
-    "rating": 3
-}
-
-            
-        ,
-        {
-            "title": "Haridwar Ganga Aarti Experience",
-            "short_desc": "Witness the mesmerizing evening Ganga Aarti.",
-            "long_desc": "We visited Haridwar and attended the evening Ganga Aarti on the ghats. The devotional chants, lamps, and floating diyas created an unforgettable spiritual experience.",
-            "img": "hardiwar.jpg",
-            "rating": 5,
-        }
-
-    ]
-
-    for e_data in sample_experiences:
-        e = Experience(
-            title=e_data['title'],
-            short_desc=e_data.get('short_desc', ''),
-            long_desc=e_data.get('long_desc', ''),
-            img=e_data.get('img', 'default.jpg')
-        )
-        db.session.add(e)
-
+def seed_tours():
+    added = 0
+    for t in TOURS:
+        if Tour.query.filter_by(title=t["title"]).first():
+            continue
+        db.session.add(Tour(**t))
+        added += 1
     db.session.commit()
-    print("Visitor Experiences for Uttarakhand and Manali added successfully.")
+    print(f"Seeded tours: {added} added.")
+
+def seed_experiences():
+    added = 0
+    for e in EXPERIENCES:
+        if Experience.query.filter_by(title=e["title"]).first():
+            continue
+        db.session.add(Experience(**e))
+        added += 1
+    db.session.commit()
+    print(f"Seeded experiences: {added} added.")
+
+# -------------------------------
+# Main Function
+# -------------------------------
+def main(reset=False):
+    app = create_app()
+    with app.app_context():
+        if reset:
+            db.drop_all()
+            print("Dropped all tables.")
+        db.create_all()
+        print("Created all tables.")
+
+        seed_itineraries()
+        seed_tours()
+        seed_experiences()
+
+        print("Seeding complete.")
+
+# -------------------------------
+# CLI Entry
+# -------------------------------
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--reset", action="store_true", help="Drop all tables before seeding")
+    args = parser.parse_args()
+    main(reset=args.reset)

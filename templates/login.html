@@ -1,11 +1,142 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container auth">
-  <h2>Login</h2>
-  <form>
-    <input placeholder="Email" />
-    <input placeholder="Password" type="password" />
-    <button>Login</button>
-  </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fff3e0, #fdebd0);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Auth Box */
+.auth-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 35px 70px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-box h2 {
+    color: #d35400;
+    margin-bottom: 10px;
+    font-size: 26px;
+}
+
+.auth-box p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #d35400;
+    box-shadow: 0 0 0 3px rgba(211,84,0,0.15);
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    background: #d35400;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #b84300;
+    transform: translateY(-1px);
+}
+
+/* Links */
+.links {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #555;
+}
+
+.links a {
+    color: #d35400;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="auth-box">
+    <h2>Login</h2>
+
+    <form method="POST" action="{{ url_for('views.login') }}">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="input-field" placeholder="Enter email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="input-field" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div class="links">
+        Don’t have an account?
+        <a href="{{ url_for('views.register') }}">Register</a>
+    </div>
 </div>
-{% endblock %}
+
+</body>
+</html>
